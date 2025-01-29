@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Greeting App',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: GreetingScreen(),
+    );
+  }
+}
+
+class GreetingScreen extends StatefulWidget {
+  @override
+  _GreetingScreenState createState() => _GreetingScreenState();
+}
+
+class _GreetingScreenState extends State<GreetingScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  String _greetingMessage = '';
+
+  void _showGreeting() {
+    setState(() {
+      String name = _nameController.text.trim();
+      if (name.isNotEmpty) {
+        _greetingMessage = 'Hello, $name!';
+      } else {
+        _greetingMessage = 'Please enter your name!';
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Greeting App'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Enter your name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _showGreeting,
+              child: Text('Say Hello'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              _greetingMessage,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
